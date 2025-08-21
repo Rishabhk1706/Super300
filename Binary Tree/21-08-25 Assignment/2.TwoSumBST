@@ -1,0 +1,29 @@
+https://leetcode.com/problems/two-sum-iv-input-is-a-bst/description/
+
+class Solution {
+    public void traverse(TreeNode root, ArrayList<Integer> k){
+        if(root==null) return;
+        traverse(root.left,k);
+        k.add(root.val);
+        traverse(root.right,k);
+    }
+    public boolean findTarget(TreeNode root, int k) {
+        ArrayList<Integer> m = new ArrayList<>();
+        traverse(root,m);
+        int start=0;
+        int end=m.size()-1;
+        while(start<end){
+            int sum=m.get(start)+m.get(end);
+            if(sum==k){
+                return true;
+            }
+            else if(sum<k){
+                start++;
+            }
+            else{
+                end--;
+            }
+        }
+        return false;
+    }
+}
