@@ -1,0 +1,40 @@
+https://www.geeksforgeeks.org/problems/merge-two-bst-s/1
+
+class Solution {
+    public void inorder(Node root, ArrayList<Integer> k){
+        if(root==null) return;
+        if(root.left!=null) inorder(root.left,k);
+        k.add(root.data);
+        if(root.right!=null) inorder(root.right,k);
+    }
+    public ArrayList<Integer> merge(Node root1, Node root2) {
+        ArrayList<Integer> l1 = new ArrayList<>();
+        ArrayList<Integer> l2 = new ArrayList<>();
+        inorder(root1,l1);
+        inorder(root2,l2);
+        int p=0,q=0;
+        ArrayList<Integer> res = new ArrayList<>();
+        while(p<l1.size() && q<l2.size()){
+            if(l1.get(p)<l2.get(q)){
+                res.add(l1.get(p));
+                p++;
+            }
+            else{
+                res.add(l2.get(q));
+                q++;
+            }
+        }
+        while(p<l1.size()){
+            res.add(l1.get(p));
+            p++;
+        }
+        while(q<l2.size()){
+            res.add(l2.get(q));
+            q++;
+        }
+        return res;
+    }
+}
+
+It can also be done using simultaneous inorder traversal using stacks without creating two full arrays,
+but that only reduces auxiliary memory, not time complexity.
