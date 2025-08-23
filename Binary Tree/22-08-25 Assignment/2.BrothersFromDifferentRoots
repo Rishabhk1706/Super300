@@ -1,0 +1,32 @@
+https://www.geeksforgeeks.org/problems/brothers-from-different-root/1
+
+class Solution {
+    public static void inorder(Node root, ArrayList<Integer> k){
+        if(root==null) return;
+        if(root.left!=null) inorder(root.left,k);
+        k.add(root.data);
+        if(root.right!=null) inorder(root.right,k);
+    }
+    public static int countPairs(Node root1, Node root2, int x) {
+        ArrayList<Integer> k1 = new ArrayList<>();
+        ArrayList<Integer> k2 = new ArrayList<>();
+        inorder(root1,k1);
+        inorder(root2,k2);
+        int c=0,left=0,right=k2.size()-1;
+        while(left<k1.size() && right>=0){
+            int sum=k1.get(left)+k2.get(right);
+            if(sum==x){
+                c++;
+                right--;
+                left++;
+            }
+            else if(sum<x){
+                left++;
+            }
+            else{
+                right--;
+            }
+        }
+        return c;
+    }
+}
