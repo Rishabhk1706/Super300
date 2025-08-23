@@ -1,4 +1,4 @@
-https://www.geeksforgeeks.org/problems/binary-tree-to-bst/1
+https://www.geeksforgeeks.org/problems/binary-tree-to-bst/1/
 
 class Solution {
     int ans=-1;
