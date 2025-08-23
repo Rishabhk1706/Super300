@@ -1,0 +1,19 @@
+http://geeksforgeeks.org/problems/print-common-nodes-in-bst/1
+
+class Solution {
+    // Function to find the nodes that are common in both BST.
+    public static void inorder(Node root,HashSet<Integer> set, ArrayList<Integer> res){
+        if(root==null) return;
+        if(root.left!=null) inorder(root.left,set,res);
+        if(!set.contains(root.data)) set.add(root.data);
+        else res.add(root.data);
+        if(root.right!=null) inorder(root.right,set,res);
+    }
+    public static ArrayList<Integer> findCommon(Node r1, Node r2) {
+        HashSet<Integer> set = new HashSet<>();
+        ArrayList<Integer> res = new ArrayList<>();
+        inorder(r1,set,res);
+        inorder(r2,set,res);
+        return res;
+    }
+}
