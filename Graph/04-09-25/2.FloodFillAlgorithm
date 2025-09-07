@@ -1,0 +1,63 @@
+https://www.geeksforgeeks.org/problems/flood-fill-algorithm1856/1
+
+BFS |
+    V
+
+class Solution {
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        int n = image.length;
+        int m = image[0].length;
+        int color = image[sr][sc];
+        return traverse(image,sr,sc,newColor,n,m,color);
+    }
+    public int[][] traverse(int[][] image, int sr, int sc, int newColor, int rows, int cols, int color){
+        Queue<int[]> q = new LinkedList<>();
+        boolean[][] visited = new boolean[rows][cols];
+        q.add(new int[] {sr,sc});
+        visited[sr][sc]=true;
+        image[sr][sc]=newColor;
+        int[] dr = {0,1,0,-1};
+        int[] dc = {1,0,-1,0};
+        while(!q.isEmpty()){
+            int[] cur = q.poll();
+            int x = cur[0];
+            int y = cur[1];
+            for(int i=0;i<4;i++){
+                int nx = x+dr[i];
+                int ny = y+dc[i];
+                if(ny>=0 && nx>=0 && ny<cols && nx<rows && (visited[nx][ny]!=true) && (image[nx][ny]==color)){
+                    visited[nx][ny]=true;
+                    image[nx][ny]=newColor;
+                    q.add(new int[] {nx,ny});
+                }
+            }
+        }
+        return image;
+    }
+}
+
+DFS |
+    V
+
+class Solution {
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        int n = image.length;
+        int m = image[0].length;
+        boolean[][] visited = new boolean[n][m];
+        int color = image[sr][sc];
+        traverse(image,sr,sc,newColor,visited,n,m,color);
+        return image;
+    }
+    public void traverse(int[][] image, int sr, int sc, int newColor, boolean[][] visited, int rows, int cols, int color){
+        if(sc<0 || sr<0 || sc>=cols || sr>=rows || (visited[sr][sc]==true) || (image[sr][sc]!=color)){
+            return;
+        }
+        visited[sr][sc]=true;
+        image[sr][sc]=newColor;
+        int[] dr = {0,1,0,-1};
+        int[] dc = {1,0,-1,0};
+        for(int i=0;i<4;i++){
+            traverse(image,sr+dr[i],sc+dc[i], newColor, visited, rows, cols, color);
+        }
+    }
+}
