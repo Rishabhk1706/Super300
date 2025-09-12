@@ -1,0 +1,43 @@
+https://www.geeksforgeeks.org/problems/number-of-enclaves/1
+
+class Solution {
+    public static void dfs(int mat[][], int i, int j, int n, int m){
+        if(i<0 || i>=n || j<0 || j>=m || mat[i][j]!=1){
+            return;
+        }
+        mat[i][j]=2;
+        dfs(mat,i+1,j,n,m);
+        dfs(mat,i-1,j,n,m);
+        dfs(mat,i,j+1,n,m);
+        dfs(mat,i,j-1,n,m);
+    }
+    int numberOfEnclaves(int[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+        for(int c=0;c<m;c++){
+            if(grid[0][c]==1){
+                dfs(grid,0,c,n,m);
+            }
+            if(grid[n-1][c]==1){
+                dfs(grid,n-1,c,n,m);
+            }
+        }
+        for(int r=0;r<n;r++){
+            if(grid[r][0]==1){
+                dfs(grid,r,0,n,m);
+            }
+            if(grid[r][m-1]==1){
+                dfs(grid,r,m-1,n,m);
+            }
+        }
+        int co = 0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]==1){
+                    co++;
+                }
+            }
+        }
+        return co;
+    }
+}

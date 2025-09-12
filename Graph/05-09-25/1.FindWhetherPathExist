@@ -1,0 +1,27 @@
+https://www.geeksforgeeks.org/problems/find-whether-path-exist5238/1
+
+class Solution {
+    public boolean dfs(int[][] grid, int sr,int sc, boolean[][] visited, int n){
+        if(sr<0 || sr>=n || sc<0 || sc>=n || visited[sr][sc] || grid[sr][sc]==0){
+            return false;
+        }
+        if(grid[sr][sc]==2) return true;
+        visited[sr][sc]=true;
+        return dfs(grid,sr+1,sc,visited,n) || dfs(grid,sr-1,sc,visited,n) ||
+        dfs(grid,sr,sc+1,visited,n) || dfs(grid,sr,sc-1,visited,n);
+    }
+    public boolean is_Possible(int[][] grid) {
+        int n = grid.length;
+        boolean[][] visited = new boolean[n][n];
+        int sr=-1,sc=-1;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]==1){
+                    sr=i;
+                    sc=j;
+                }
+            }
+        }
+        return dfs(grid,sr,sc,visited,n);
+    }
+}
