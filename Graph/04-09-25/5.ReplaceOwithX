@@ -1,0 +1,46 @@
+https://www.geeksforgeeks.org/problems/replace-os-with-xs0052/1
+
+class Solution {
+    public static void dfs(char mat[][], int i, int j, int n, int m){
+        if(i<0 || i>=n || j<0 || j>=m || mat[i][j]!='O'){
+            return;
+        }
+        mat[i][j]='S';
+        dfs(mat,i+1,j,n,m);
+        dfs(mat,i-1,j,n,m);
+        dfs(mat,i,j+1,n,m);
+        dfs(mat,i,j-1,n,m);
+    }
+    static char[][] fill(char mat[][]) {
+        int n = mat.length;
+        int m = mat[0].length;
+        for(int r=0;r<n;r++){
+            if(mat[r][0] == 'O'){
+                dfs(mat,r,0,n,m);
+            }
+            if(mat[r][m-1] == 'O'){
+                dfs(mat,r,m-1,n,m);
+            }
+        }
+        for(int c=0;c<m;c++){
+            if(mat[0][c] == 'O'){
+                dfs(mat,0,c,n,m);
+            }
+            if(mat[n-1][c] == 'O'){
+                dfs(mat,n-1,c,n,m);
+            }
+        }
+        
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(mat[i][j]=='O'){
+                    mat[i][j]='X';
+                }
+                if(mat[i][j]=='S'){
+                    mat[i][j]='O';
+                }
+            }
+        }
+        return mat;
+    }
+}
