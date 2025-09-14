@@ -1,0 +1,42 @@
+https://www.geeksforgeeks.org/problems/distance-of-nearest-cell-having-1-1587115620/1
+
+class Solution {
+    public int[][] nearest(int[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+        int[][] dist = new int[n][m];
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j] == 0){
+                    dist[i][j] = Integer.MAX_VALUE;
+                }
+            }
+        }
+        Queue<int[]> q = new LinkedList<>();
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]==1){
+                    dist[i][j] = 0;
+                    q.offer(new int[]{i, j});
+                }
+            }
+        }
+        int[] directions = {-1, 0, 1, 0, -1, 0};
+        while(!q.isEmpty()){
+            int[] curr = q.poll();
+            int x = curr[0];
+            int y = curr[1];
+            for(int i=0;i<4;i++){
+                int nx = x + directions[i];
+                int ny = y + directions[i + 1];
+                if(nx>=0 && nx<n && ny>=0 && ny<m){
+                    if(dist[nx][ny]>dist[x][y]+1){
+                        dist[nx][ny]=dist[x][y] + 1;
+                        q.offer(new int[]{nx, ny});
+                    }
+                }
+            }
+        }
+        return dist;
+    }
+}
