@@ -1,0 +1,41 @@
+https://www.geeksforgeeks.org/problems/number-of-distinct-islands/1
+
+class Solution {
+    public void bfs(int sr, int sc, int rows, int cols, boolean[][] visited, Set<List<String>> set, int[][] grid){
+        Queue<int[]> q = new LinkedList<>();
+        q.add(new int[] {sr,sc});
+        visited[sr][sc]=true;
+        int[] dr = {0,1,0,-1};
+        int[] dc = {1,0,-1,0};
+        List<String> k = new ArrayList<>();
+        while(!q.isEmpty()){
+            int[] cur = q.poll();
+            int x = cur[0];
+            int y = cur[1];
+            for(int i=0;i<4;i++){
+                int nx = x+dr[i];
+                int ny = y+dc[i];
+                if(ny>=0 && nx>=0 && ny<cols && nx<rows && (visited[nx][ny]!=true) && (grid[nx][ny]==1)){
+                    visited[nx][ny]=true;
+                    q.add(new int[] {nx,ny});
+                    k.add(((nx-sr) + "," + (ny-sc)));
+                }
+            }
+        }
+        set.add(k);
+    }
+    int countDistinctIslands(int[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+        boolean[][] visited = new boolean[n][m];
+        Set<List<String>> set = new HashSet<>();
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(!visited[i][j] && grid[i][j]==1){
+                    bfs(i,j,n,m,visited,set,grid);
+                }
+            }
+        }
+        return set.size();
+    }
+}
