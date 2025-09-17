@@ -1,0 +1,43 @@
+https://www.geeksforgeeks.org/problems/shortest-path-in-a-binary-maze-1655453161/1
+
+class Solution {
+    class Cell{
+        int row, col, dist;
+        public Cell(int row, int col, int dist){
+            this.row = row;
+            this.col = col;
+            this.dist = dist;
+        }
+    }
+    int shortestPath(int[][] grid, int[] source, int[] destination){
+        int n = grid.length;
+        int m = grid[0].length;
+        if(grid[source[0]][source[1]]==0 || grid[destination[0]][destination[1]] == 0){
+            return -1;
+        }
+        if(source[0]==destination[0] && source[1]==destination[1]){
+            return 0;
+        }
+        boolean[][] visited = new boolean[n][m];
+        Queue<Cell> q = new LinkedList<>();
+        int[] dr = {-1, 1, 0, 0};
+        int[] dc = {0, 0, -1, 1};
+        q.add(new Cell(source[0], source[1], 0));
+        visited[source[0]][source[1]] = true;
+        while(!q.isEmpty()){
+            Cell curr = q.poll();
+            for(int i=0;i<4;i++){
+                int nr = curr.row + dr[i];
+                int nc = curr.col + dc[i];
+                if(nr>=0 && nr<n && nc>= 0 && nc<m && !visited[nr][nc] && grid[nr][nc]==1){
+                    if(nr==destination[0] && nc==destination[1]){
+                        return curr.dist + 1;
+                    }
+                    visited[nr][nc]=true;
+                    q.add(new Cell(nr, nc, curr.dist+1));
+                }
+            }
+        }
+        return -1;
+    }
+}
